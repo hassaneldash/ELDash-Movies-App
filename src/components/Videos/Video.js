@@ -72,7 +72,7 @@ const Video = ({ videos }) => {
           </div>
         </div>
       ) : (
-        <h2 className="text-center mt-2 p-2">No videos found</h2>
+        <h2 className="text-center mt-2 p-2">Sorry, No Videos Available</h2>
       )}
 
       {videos && videos.length > 6 && (
@@ -83,7 +83,7 @@ const Video = ({ videos }) => {
           style={{ width: "fit-content", cursor: "pointer" }}
           onClick={toggleTrailersExpand}
         >
-          {isExpanded ? "Show less videos" : "Show more videos"}
+          {isExpanded ? "Show Less Videos" : "Show More Videos"}
         </button>
       )}
     </>

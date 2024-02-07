@@ -11,6 +11,10 @@ import Results from "./pages/Results/Results";
 import GenreList from "./pages/Genre/Genre";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import { Provider } from './context/Context';
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Wishlist from "./pages/Wishlist/Wishlist";
+import UserDetails from "./pages/UserDetails/UserDetails";
 
 export const LoaderContext = React.createContext();
 
@@ -46,6 +50,10 @@ function App() {
               path="/genre/:mediaType/:genre/:id"
               element={<GenreList />}
             />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/user-details" component={<UserDetails />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>

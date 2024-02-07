@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../../store/actions/ToggleFav';
 import {
   renderTrimmedText,
   toggleExpandTrimmedText,
@@ -7,6 +9,19 @@ import {
 
 const TvDetail = ({ tv }) => {
   const [isExpandedOverview, setExpandedOverview] = useState(false);
+
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const isMovieInFavorites = favorites.some((favMovie) => favMovie.id === tv?.id);
+
+  const handleAddToWishlist = () => {
+    dispatch(addToFavorites(tv));
+  };
+
+  const handleRemoveFromWishlist = () => {
+    dispatch(removeFromFavorites(tv?.id));
+  };
 
   const toggleExpandOverview = () => {
     setExpandedOverview(!isExpandedOverview);
@@ -41,10 +56,25 @@ const TvDetail = ({ tv }) => {
             </div>
 
             <div className="item_details__text p-1">
-              <h1 className="m-2">{tv.original_title || tv.original_name}</h1>
+              <h1 className="m-2">
+                {tv.original_title || tv.original_name}
+                {tv && (isMovieInFavorites ? (
+                      <img onClick={handleRemoveFromWishlist}
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/754px-Star_full.svg.png"
+                        alt="Filled Star"
+                        className="star-icon"
+                        />
+                  ) : (
+                      <img onClick={handleAddToWishlist}
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/2048px-Empty_Star.svg.png"
+                        alt="Empty Star"
+                        className="star-icon"
+                        />
+                  ))}
+              </h1>
 
               <Link to={tv.homepage} className="m-2 text-decoration-underline">
-                Go to Home Page
+                Go to Official Site
               </Link>
 
               <p className="m-2">
@@ -155,7 +185,7 @@ const TvDetail = ({ tv }) => {
                     <span key={index}>{genre.name}</span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
             </div>
@@ -173,7 +203,7 @@ const TvDetail = ({ tv }) => {
                     </span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
               <p className="mb-0 mt-2">
@@ -193,7 +223,7 @@ const TvDetail = ({ tv }) => {
                     </span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
             </div>

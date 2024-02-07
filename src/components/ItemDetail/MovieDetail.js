@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../../store/actions/ToggleFav';
 import {
   renderTrimmedText,
   toggleExpandTrimmedText,
@@ -7,6 +9,18 @@ import {
 
 const MovieDetail = ({ movie }) => {
   const [isExpandedOverview, setExpandedOverview] = useState(false);
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const isMovieInFavorites = favorites.some((favMovie) => favMovie.id === movie?.id);
+
+  const handleAddToWishlist = () => {
+    dispatch(addToFavorites(movie));
+  };
+
+  const handleRemoveFromWishlist = () => {
+    dispatch(removeFromFavorites(movie?.id));
+  };
 
   const toggleExpandOverview = () => {
     setExpandedOverview(!isExpandedOverview);
@@ -15,6 +29,7 @@ const MovieDetail = ({ movie }) => {
   return (
     <>
       <div className="item_details__wrapper default__margin_top flex-column p-3">
+
         <div className="img__overlay_container">
           <img
             src={
@@ -43,13 +58,27 @@ const MovieDetail = ({ movie }) => {
             <div className="item_details__text p-1">
               <h1 className="m-2">
                 {movie.original_title || movie.original_name}
+                {movie && (isMovieInFavorites ? (
+                      <img onClick={handleRemoveFromWishlist}
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/754px-Star_full.svg.png"
+                        alt="Filled Star"
+                        className="star-icon"
+                        />
+                  ) : (
+                      <img onClick={handleAddToWishlist}
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/2048px-Empty_Star.svg.png"
+                        alt="Empty Star"
+                        className="star-icon"
+                        />
+                  ))}
               </h1>
+                
 
               <Link
                 to={movie.homepage}
                 className="m-2 text-decoration-underline"
               >
-                Go to Home Page
+                Go to Official Site
               </Link>
 
               <p className="m-2">
@@ -139,7 +168,7 @@ const MovieDetail = ({ movie }) => {
                     <span key={index}>{genre.name}</span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
             </div>
@@ -155,7 +184,7 @@ const MovieDetail = ({ movie }) => {
                     </span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
               <p className="mb-0">
@@ -176,7 +205,7 @@ const MovieDetail = ({ movie }) => {
                     </span>
                   ))
                 ) : (
-                  <span className="not_badge">Not Provided</span>
+                  <span className="not_badge">Sorry, Not Provided.</span>
                 )}
               </p>
             </div>

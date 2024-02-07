@@ -1,13 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../../store/actions/ToggleFav';
 import "./Card.css";
 import { useLanguage } from '../../context/Context';
 
-const Card = ({ items }) => {
+const Card = ({ items, wishlist }) => {
   const { selectedLanguage } = useLanguage();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
   const handleCardClick = (mediaType, id) => {
     navigate(`/${mediaType}/${id}?language=${selectedLanguage}`);
+  };
+
+  const isMovieInFavorites = (item) => {
+    return favorites.some((favMovie) => favMovie.id === item.id);
+  };
+
+  const handleToggleWishlist = (item) => {
+    if (isMovieInFavorites(item)) {
+      dispatch(removeFromFavorites(item.id));
+    } else {
+      dispatch(addToFavorites(item));
+    }
   };
 
   return (
@@ -20,7 +37,30 @@ const Card = ({ items }) => {
             title={item.original_name || item.original_title}
             onClick={() => handleCardClick(item?.media_type, item?.id)}
           >
-            <span className="standard__badge badge">4K</span>
+
+            <button
+              className="star-button standard__badge badge "
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleWishlist(item);
+              }}
+            >
+              {isMovieInFavorites(item) ? (
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/754px-Star_full.svg.png"
+                  alt="Filled Star"
+                  height={24}
+                />
+              ) : (
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/2048px-Empty_Star.svg.png"
+                  alt="Empty Star"
+                  height={24}
+                />
+              )}
+            </button>
+
+            {/* <span className="standard__badge badge">4K</span> */}
             <div className="card_img">
               <img
                 src={
@@ -53,25 +93,32 @@ const Card = ({ items }) => {
                     : "N/A"}
                 </p>
                 <p className="mb-0 bg-warning px-2 py-0 rounded-3">
-                  {/* {item.media_type ? item.media_type.charAt(0).toUpperCase() + item.media_type.slice(1) : "N/A"} */}
                   {item.media_type ? item.media_type.toUpperCase() : "N/A"}
                 </p>
               </div>
 
               <div className="imdb_ratings d-flex justify-content-between align-items-center mt-1">
-                <img src="https://m.media-amazon.com/images/G/01/IMDb/brand/guidelines/imdb/IMDb_Logo_Rectangle_Gold._CB443386186_.png"
-                  // src="https://m.media-amazon.com/images/G/01/IMDb/brand/guidelines/imdb/IMDb_Logo_Alt_Rectangle_Black._CB443386324_.png"
-                  alt="IMDB" width="30px"/>
+                <img
+                  src="https://m.media-amazon.com/images/G/01/IMDb/brand/guidelines/imdb/IMDb_Logo_Rectangle_Gold._CB443386186_.png"
+                  alt="IMDB"
+                  width="30px"
+                />
 
                 <p className="mb-0">
                   {item.vote_average && item.vote_count ? (
                     <>
-                      <i className="fa fa-star mx-1" aria-hidden="true" style={{ color: "#FFC107" }}></i>
-                      <span className="not_badge"> {item.vote_average.toFixed(1)} </span>
+                      <i
+                        className="fa fa-star mx-1"
+                        aria-hidden="true"
+                        style={{ color: "#FFC107" }}
+                      ></i>
+                      <span className="not_badge">
+                        {item.vote_average.toFixed(1)}
+                      </span>
                       <span className="not_badge">({item.vote_count})</span>
                     </>
                   ) : (
-                    <span className="not_badge">N/A</span>
+                    <span className="not_badge">Sorry, Not Available</span>
                   )}
                 </p>
               </div>
