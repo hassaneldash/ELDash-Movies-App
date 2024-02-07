@@ -27,7 +27,6 @@ const Sort = ({ items, setSortedItems, mediaType, currentPage = null }) => {
           );
           setSortedOrder("with lowest rating");
         } else if (option.dataset.title === "newest") {
-          // Sorting by newest date (considering missing dates)
           newMovies = updatedMovies.sort((a, b) => {
             const aDate = a.first_air_date || a.release_date || "9999-12-31";
             const bDate = b.first_air_date || b.release_date || "9999-12-31";
@@ -35,7 +34,6 @@ const Sort = ({ items, setSortedItems, mediaType, currentPage = null }) => {
           });
           setSortedOrder("of newest date");
         } else if (option.dataset.title === "oldest") {
-          // Sorting by oldest date (considering missing dates)
           newMovies = updatedMovies.sort((a, b) => {
             const aDate = a.first_air_date || a.release_date || "0000-01-01";
             const bDate = b.first_air_date || b.release_date || "0000-01-01";

@@ -54,7 +54,6 @@ const Search = () => {
           </div>
         </div>
 
-        {/* get search list if search term includes the existing content */}
         <ol className="standard__border_radius standard__bg standard__box_shadow d-flex justify-content-center align-items-center flex-column mx-auto p-0">
           {searchResults && searchResults.length >= 3 ? (
             searchResults

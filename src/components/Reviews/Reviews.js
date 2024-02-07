@@ -41,12 +41,9 @@ const Reviews = ({ items }) => {
   }
 
   const renderTrimmedDate = (date) => {
-    // sample date: "2024-01-28T09:46:05.135Z"
     const year = date.split("-")[0];
     const month = parseInt(date.split("-")[1] - 1, 10);
-    // taking only 2 digits from the third split
-    const day =
-      date.split("-")[2].split("")[0] + date.split("-")[2].split("")[1];
+    const day = date.split("-")[2].split("")[0] + date.split("-")[2].split("")[1];
 
     const hour = parseInt(date.split("-")[2].match(/\d{2}:/));
     const updatedHour = hour > 12 ? hour - 12 : hour;

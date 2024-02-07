@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { LoaderContext } from "../../App";
 import { fetchAndSetData } from "../../components/Reusable/Reusable";
-
+import { useLanguage } from '../../context/Context';
 import Loader from "../../components/Loader/Loader";
 import Card from "../../components/Cards/Card";
 
@@ -9,6 +9,8 @@ import "../../index.css";
 import "./Hero.css";
 
 const Hero = () => {
+  const { selectedLanguage } = useLanguage();
+  const [languageChanged, setLanguageChanged] = useState(false);
   const categories = ["all", "tv", "movie"];
   const { isLoading, setIsLoading } = useContext(LoaderContext);
   const titleRef = useRef(null);
@@ -18,20 +20,20 @@ const Hero = () => {
   useEffect(() => {
     setIsLoading(true);
     fetchAndSetData(
-      `https://api.themoviedb.org/3/trending/${activeCategory}/day`,
+      `https://api.themoviedb.org/3/trending/${activeCategory}/day?language=${selectedLanguage}`,
       setActiveList,
       "results"
     );
     setIsLoading(false);
     // eslint-disable-next-line
-  }, [activeCategory]);
+  }, [activeCategory, selectedLanguage, languageChanged]);
 
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
   };
 
   if (isLoading) {
-    return <Loader cardCount={16} width="180px" />;
+    return <Loader cardCount={21} width="180px" />;
   }
 
   return (

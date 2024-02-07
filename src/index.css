@@ -64,8 +64,8 @@ body {
   background: -webkit-linear-gradient(to right, #E63B60, #223BC9);
   background: linear-gradient(to right, #E63B60, #223BC9);
   background-size: 100%;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -76,8 +76,8 @@ body {
   background: -webkit-linear-gradient(to left, #E63B60, #223BC9);
   background: linear-gradient(to left, #E63B60, #223BC9);
   background-size: 20%;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -166,4 +166,17 @@ footer {
 
 .review_container {
   word-wrap: break-word;
+}
+
+
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+}
+
+
+.borderless{
+  border: none;
+  background: none;
 }

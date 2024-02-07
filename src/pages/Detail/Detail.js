@@ -11,7 +11,6 @@ import Person from "../../components/Cards/Person";
 import Video from "../../components/Videos/Video";
 import Reviews from "../../components/Reviews/Reviews";
 import { useLanguage } from '../../context/Context';
-
 import "./Detail.css";
 
 const Detail = () => {
@@ -23,12 +22,6 @@ const Detail = () => {
   const [trailerVideos, setTrailerVideos] = useState([]);
   const [people, setPeople] = useState([]);
   const [reviews, setReviews] = useState([]);
-
-  dynamicDocTitle(
-    `ELDash Movies - ${`More about "${
-      itemDetails?.original_name || itemDetails?.original_title
-    }"`}`
-  );
 
   useEffect(() => {
     fetchAndSetData(
@@ -66,11 +59,13 @@ const Detail = () => {
       {itemDetails && trailerVideos && people && reviews && (
         <>
           <Header />
+
           {mediaType === "movie" ? (
             <MovieDetail movie={itemDetails} />
           ) : (
             <TvDetail tv={itemDetails} />
           )}
+
           <Person people={people} />
           <hr
             style={{

@@ -69,7 +69,7 @@ const PersonDetailCard = ({ person }) => {
           </div>
         </div>
       ) : (
-        <h2>Not Found</h2>
+        <h2 >Sorry, Not Found.</h2>
       )}
     </>
   );
