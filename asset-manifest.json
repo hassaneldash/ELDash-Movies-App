@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hassaneldash.github.io/ELDash-Movies-App/static/css/main.9a4d95a0.css",
+    "main.js": "/hassaneldash.github.io/ELDash-Movies-App/static/js/main.5f01376f.js",
+    "index.html": "/hassaneldash.github.io/ELDash-Movies-App/index.html",
+    "main.9a4d95a0.css.map": "/hassaneldash.github.io/ELDash-Movies-App/static/css/main.9a4d95a0.css.map",
+    "main.5f01376f.js.map": "/hassaneldash.github.io/ELDash-Movies-App/static/js/main.5f01376f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9a4d95a0.css",
+    "static/js/main.5f01376f.js"
+  ]
+}
