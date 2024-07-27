@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchAndSetData } from "../../components/Reusable/Reusable";
-import { useLanguage } from '../../context/Context';
+import { useLanguage } from "../../context/Context";
 import "./Header.css";
-
+import { ThemeContext } from "../../ThemeContext";
 const Header = ({ handlePageClick }) => {
   const navigate = useNavigate();
   const [movieGenres, setMovieGenres] = useState([]);
@@ -15,6 +15,8 @@ const Header = ({ handlePageClick }) => {
   const { selectedLanguage, updateLanguage } = useLanguage();
   const [languageChanged, setLanguageChanged] = useState(false);
   const listRef = useRef(null);
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleMovieGenreSelection = (index) => {
     const id = movieGenres[index].id;
@@ -38,7 +40,7 @@ const Header = ({ handlePageClick }) => {
     setDropdownOpen(false);
   };
 
-  const handleChangeLanguage  = (newLanguage) => {
+  const handleChangeLanguage = (newLanguage) => {
     updateLanguage(newLanguage);
     setLanguageChanged(true);
   };
@@ -49,7 +51,7 @@ const Header = ({ handlePageClick }) => {
       setMovieGenres,
       "genres"
     );
-  
+
     fetchAndSetData(
       `https://api.themoviedb.org/3/genre/tv/list?language=${selectedLanguage}`,
       setTvGenres,
@@ -57,7 +59,6 @@ const Header = ({ handlePageClick }) => {
     );
     setLanguageChanged(false);
   }, [selectedLanguage, languageChanged]);
-  
 
   const DropdownMenu = ({ title, genres, handleSelection }) => (
     <div className="col-mega_menu">
@@ -77,9 +78,9 @@ const Header = ({ handlePageClick }) => {
   );
 
   return (
-    <>
+    <div className={`header ${theme}`}>
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light standard__box_shadow">
-        <div className="container-fluid text-dark">
+        <div className="container-fluid">
           <Link
             className="navbar-brand logo_text"
             to="/"
@@ -187,25 +188,26 @@ const Header = ({ handlePageClick }) => {
                   Genres
                 </Link>
                 <div className="dropdown-menu mega_menu" role="menu">
-                  <div className="mega_menu_col">
-                    <div className="col-6 col-12">
-                      <DropdownMenu
-                        title="Movies"
-                        genres={movieGenres}
-                        handleSelection={handleMovieGenreSelection}
-                      />
-                    </div>
-                    <div className="col-6 col-12">
-                      <DropdownMenu
-                        title="TV Shows"
-                        genres={tvGenres}
-                        handleSelection={handleTvGenreSelection}
-                      />
+                  <div className={`header ${theme}`}>
+                    <div className="mega_menu_col">
+                      <div className="col-6 col-12">
+                        <DropdownMenu
+                          title="Movies"
+                          genres={movieGenres}
+                          handleSelection={handleMovieGenreSelection}
+                        />
+                      </div>
+                      <div className="col-6 col-12">
+                        <DropdownMenu
+                          title="TV Shows"
+                          genres={tvGenres}
+                          handleSelection={handleTvGenreSelection}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </li>
-
 
               <li className="nav-item dropdown">
                 <Link
@@ -218,8 +220,20 @@ const Header = ({ handlePageClick }) => {
                 <div className="dropdown-menu mega_menu" role="menu">
                   <div className="mega_menu_col">
                     <div className="col-6 col-12">
-                    <button className="btn btn-outline-light" onClick={() => handleChangeLanguage("en-US")}> English </button>
-                    <button className="btn btn-outline-light" onClick={() => handleChangeLanguage("ar-SA")}> Arabic </button>
+                      <button
+                        className="btn"
+                        onClick={() => handleChangeLanguage("en-US")}
+                      >
+                        {" "}
+                        English{" "}
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() => handleChangeLanguage("ar-SA")}
+                      >
+                        {" "}
+                        Arabic{" "}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -231,13 +245,14 @@ const Header = ({ handlePageClick }) => {
                 </Link>
               </li>
 
-
-
+              <li className="nav-item nav-link hov" onClick={toggleTheme}>
+                  Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+              </li>
             </ul>
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 
