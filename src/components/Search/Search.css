@@ -15,6 +15,10 @@
   background: rgba(222, 222, 222, 0.9);
 }
 
+.search_bar.dark {
+  background-color: rgba(33, 40, 44, 0.9);
+}
+
 .search_bar input {
   width: 75%;
   height: 45px;

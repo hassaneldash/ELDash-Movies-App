@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 const Pagination = ({ handlePageNumClick, totalPages, currentPage }) => {
   const pageBtnsPerPage = 5;
-  const [currenPageBtnsGroup, setCurrentPageBtnsGroup] = useState(1);
+  const [currentPageBtnsGroup, setCurrentPageBtnsGroup] = useState(1);
 
-  const startPage = (currenPageBtnsGroup - 1) * pageBtnsPerPage + 1;
-  const endPage = Math.min(currenPageBtnsGroup * pageBtnsPerPage, totalPages);
+  const startPage = (currentPageBtnsGroup - 1) * pageBtnsPerPage + 1;
+  const endPage = Math.min(currentPageBtnsGroup * pageBtnsPerPage, totalPages);
 
   const visiblePages = Array.from(
     { length: endPage - startPage + 1 },
@@ -13,14 +13,14 @@ const Pagination = ({ handlePageNumClick, totalPages, currentPage }) => {
   );
 
   const handleNextGroup = () => {
-    if (currenPageBtnsGroup * pageBtnsPerPage < totalPages) {
-      setCurrentPageBtnsGroup(currenPageBtnsGroup + 1);
+    if (currentPageBtnsGroup * pageBtnsPerPage < totalPages) {
+      setCurrentPageBtnsGroup(currentPageBtnsGroup + 1);
     }
   };
 
   const handlePrevGroup = () => {
-    if (currenPageBtnsGroup > 1) {
-      setCurrentPageBtnsGroup(currenPageBtnsGroup - 1);
+    if (currentPageBtnsGroup > 1) {
+      setCurrentPageBtnsGroup(currentPageBtnsGroup - 1);
     }
   };
 
@@ -32,10 +32,11 @@ const Pagination = ({ handlePageNumClick, totalPages, currentPage }) => {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <ul className="pagination">
-          <li className="page-item">
+          <li className={`page-item ${currentPageBtnsGroup === 1 && "disabled"}`}>
             <button
               className="page-link border border-dark"
               onClick={handlePrevGroup}
+              disabled={currentPageBtnsGroup === 1}
             >
               Previous
             </button>
@@ -55,10 +56,11 @@ const Pagination = ({ handlePageNumClick, totalPages, currentPage }) => {
             </li>
           ))}
 
-          <li className="page-item">
+          <li className={`page-item ${currentPageBtnsGroup * pageBtnsPerPage >= totalPages && "disabled"}`}>
             <button
               className="page-link border border-dark"
               onClick={handleNextGroup}
+              disabled={currentPageBtnsGroup * pageBtnsPerPage >= totalPages}
             >
               Next
             </button>

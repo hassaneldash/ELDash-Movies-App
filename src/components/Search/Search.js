@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext  } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAndSetData } from "../Reusable/Reusable";
 
 import Jumbotron from "../Jumbotron/Jumbotron";
 import SearchListItem from "./SearchListItem";
-
+import { ThemeContext } from '../../ThemeContext';
 import "../../index.css";
 import "./Search.css";
 
@@ -13,7 +13,7 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const listRef = useRef(null);
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
   useEffect(() => {
     fetchAndSetData(
       `https://api.themoviedb.org/3/search/multi?query=${searchTerm}&api_key=${process.env.REACT_APP_API_KEY}`,
