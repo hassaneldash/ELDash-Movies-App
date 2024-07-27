@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { ThemeContext } from './ThemeContext';
 import Home from "./pages/Home/Home";
 import Movies from "./pages/Movies/Movies";
 import TV from "./pages/TV/TV";
@@ -20,6 +20,12 @@ export const LoaderContext = React.createContext();
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
+  const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
 
   const LoaderContextValues = {
     isLoading,
@@ -30,8 +36,11 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
+
+  
+
   return (
-    <>
+    <div className="App">
       <Provider>
       <LoaderContext.Provider value={LoaderContextValues}>
         <BrowserRouter>
@@ -59,7 +68,7 @@ function App() {
         </BrowserRouter>
       </LoaderContext.Provider>
       </Provider>
-    </>
+    </div>
   );
 }
 

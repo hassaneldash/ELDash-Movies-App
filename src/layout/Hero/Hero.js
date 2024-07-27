@@ -33,7 +33,7 @@ const Hero = () => {
   };
 
   if (isLoading) {
-    return <Loader cardCount={21} width="180px" />;
+    return <Loader cardCount={1} width="180px" />;
   }
 
   return (

@@ -12,7 +12,7 @@ import Card from "../../components/Cards/Card";
 import Pagination from "../../components/Pagination/Pagination";
 import Sort from "../../components/Sort/Sort";
 import Footer from "../../layout/Footer/Footer";
-import { useLanguage } from '../../context/Context';
+import { useLanguage } from "../../context/Context";
 
 const Movies = () => {
   const { selectedLanguage } = useLanguage();
@@ -39,7 +39,7 @@ const Movies = () => {
       },
       navigate
     );
-    setLanguageChanged(false)
+    setLanguageChanged(false);
   }, [currentPage, selectedLanguage, languageChanged, navigate]);
 
   const handleMoviesClick = () => {
